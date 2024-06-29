@@ -6,37 +6,64 @@
     <title>Visual Music</title>
     <style>
         body {
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #000;
-            margin: 0;
-            overflow: hidden;
-        }
-        .centered-canvas {
-            width: 80%; /* Adjust the width of the canvas as needed */
-            max-width: 600px; /* Set a maximum width if desired */
-            height: 400px; /* Adjust the height of the canvas */
-            margin: 0 auto; /* Center the canvas horizontally */
-            display: block; /* Ensure the canvas is displayed as a block element */
-        }
-        #controls {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            background-color: #000;
             color: #fff;
-            z-index: 1;
+            font-family: Arial, sans-serif;
+        }
+        .player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #visualizer {
+            display: block;
+            margin: 10px 0;
+            border: 1px solid #444;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .controls button {
+            background-color: #00586e;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .controls button:hover {
+            background-color: #00586e;
+        }
+        .song-title {
+            margin: 10px 0;
+            text-align: center;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <div id="controls">
+    <div class="player">
         <input type="file" id="audioFile" accept="audio/*">
-        <button id="playButton">Play</button>
-        <button id="pauseButton">Pause</button>
+        <canvas id="visualizer"></canvas>
+        <div class="controls">
+            <button id="playButton">Play</button>
+            <button id="pauseButton">Pause</button>
+        </div>
+        <div class="song-title" id="songTitle">No song playing</div>
     </div>
-    <canvas id="visualizer" class="centered-canvas"></canvas>
     
     <script src="visualizer.js"></script>
 </body>
