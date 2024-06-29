@@ -15,12 +15,25 @@ let sourceNode;
 
 let analyser;
 let frequencyarray; 
-let bufferlength;
+let bufferLength;
 
 // set the file uploading + play/pause
 audioinput.addEventListener('change', HandleFiles);
 playbutton.addEventListener('click', () => audioElement && audioElement.play());
 pausebutton.addEventListener('click', () => audioElement && audioElement.pause());
+
+// the shades of rainbow to use in bars
+const rainbowColors = [
+    'rgb(255, 128, 128)',
+    'rgb(255, 191, 128)',
+    'rgb(255, 255, 128)',
+    'rgb(191, 255, 128)',
+    'rgb(128, 255, 191)',
+    'rgb(128, 191, 255)',
+    'rgb(191, 128, 255)',
+    'rgb(255, 128, 255)'
+];
+const numberofColors = rainbowColors.length
 
 
 // make a url of the input music file
@@ -47,8 +60,8 @@ function InitializeAudio(fileURL) {
     analyser.connect(audioContext.destination);
 
     analyser.fftSize = 256;
-    bufferlength = analyser.frequencyBinCount;
-    frequencyarray = new Uint8Array(bufferlength);
+    bufferLength = analyser.frequencyBinCount;
+    frequencyarray = new Uint8Array(bufferLength);
 
     CreateTheVisualizer();
 }
@@ -62,18 +75,26 @@ function CreateTheVisualizer() {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // create the bars!!!
-    const barWidth = (canvas.width / bufferlength) * 2.5;
-    let barHeight;
-    let x = 0;
+    // Calculate bar width
+    const barWidth = (canvas.width / bufferLength) * 1;
+    let x = (canvas.width - (barWidth * bufferLength)) / 2;
 
-    for (let i = 0; i < bufferlength; i++) {
-        barHeight = frequencyarray[i];
-
-        // fill the "blocks" in white
-        ctx.fillStyle = `rgb(255,255,255)`;
+    // Draw the bars up
+    for (let i = 0; i < bufferLength; i++) {
+        const barHeight = frequencyarray[i];
+        // calculate the colorIndex based on the position(number) of the bar
+        const colorIndex = Math.floor((i / bufferLength) * numberofColors);
+        ctx.fillStyle = rainbowColors[colorIndex];
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-
         x += barWidth + 1;
     }
+
+    // Draw text
+    if (audioElement && audioElement.src) {
+        ctx.fillStyle = 'white';
+        ctx.font = '20px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Now Playing', canvas.width / 2, canvas.height - 10);
+    }
 }
+

@@ -14,6 +14,13 @@
             margin: 0;
             overflow: hidden;
         }
+        .centered-canvas {
+            width: 80%; /* Adjust the width of the canvas as needed */
+            max-width: 600px; /* Set a maximum width if desired */
+            height: 400px; /* Adjust the height of the canvas */
+            margin: 0 auto; /* Center the canvas horizontally */
+            display: block; /* Ensure the canvas is displayed as a block element */
+        }
         #controls {
             position: absolute;
             top: 10px;
@@ -29,7 +36,7 @@
         <button id="playButton">Play</button>
         <button id="pauseButton">Pause</button>
     </div>
-    <canvas id="visualizer"></canvas>
+    <canvas id="visualizer" class="centered-canvas"></canvas>
     
     <script src="visualizer.js"></script>
 </body>
