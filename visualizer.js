@@ -4,9 +4,11 @@ const playbutton = document.getElementById('playButton');
 const pausebutton = document.getElementById('pauseButton');
 const canvas = document.getElementById('visualizer');
 const ctx = canvas.getContext('2d');
+const colorPalette = document.getElementById('colorPalette');
+const songTitle = document.getElementById('songTitle');
 
 // set canvas dimensions to the computer window
-canvas.width = 1200;
+canvas.width = 1280;
 canvas.height = 400;
 
 let audioContext;
@@ -22,8 +24,9 @@ audioinput.addEventListener('change', HandleFiles);
 playbutton.addEventListener('click', () => audioElement && audioElement.play());
 pausebutton.addEventListener('click', () => audioElement && audioElement.pause());
 
-// the shades of rainbow to use in bars
-const rainbowColors = [
+// preset of colors to choose
+const palettes = { 
+    rainbow: [
     'rgb(255, 128, 128)',
     'rgb(255, 191, 128)',
     'rgb(255, 255, 128)',
@@ -32,9 +35,32 @@ const rainbowColors = [
     'rgb(128, 191, 255)',
     'rgb(191, 128, 255)',
     'rgb(255, 128, 255)'
-];
-const numberofColors = rainbowColors.length;
+    ],
 
+    bluepastel: [
+    'rgb(173, 216, 230)',
+    'rgb(135, 206, 250)',
+    'rgb(135, 206, 235)',
+    'rgb(173, 216, 230)',
+    'rgb(135, 206, 250)',
+    'rgb(135, 206, 235)',
+    'rgb(173, 216, 230)',
+    'rgb(135, 206, 250)',
+    'rgb(173, 216, 230)',
+    'rgb(135, 206, 250)',
+    'rgb(135, 206, 235)',
+    'rgb(173, 216, 230)',
+    'rgb(135, 206, 250)',
+    'rgb(135, 206, 235)',
+    'rgb(173, 216, 230)',
+    'rgb(135, 206, 250)',
+    ],
+
+    monotone: [
+        'rgb(255, 255, 255)'
+    ]
+
+}
 
 // make a url of the input music file
 function HandleFiles(event) {
@@ -59,15 +85,9 @@ function InitializeAudio(fileURL, fileName) {
     sourceNode.connect(analyser);
     analyser.connect(audioContext.destination);
 
-
     analyser.fftSize = 256;
     bufferLength = analyser.frequencyBinCount;
     frequencyarray = new Uint8Array(bufferLength);
-
-    const barWidth = 15;
-    const spacing = 5;
-    canvas.width = 1200;
-    canvas.height = 400;
 
     songTitle.textContent = ("NOW PLAYING: " + fileName.slice(0, -4));
     CreateTheVisualizer();
@@ -86,15 +106,19 @@ function CreateTheVisualizer() {
     const spacing = 3;
     let x = 0;
 
+    const numberOfBars = 100; //fix the amount of bars to limit only the lower frequencies
+    const selectedPalette = palettes[colorPalette.value];
+    const colorCount = Math.min(numberOfBars, selectedPalette.length);
+
     // Draw the bars up
-    for (let i = 0; i < bufferLength; i++) {
+    for (let i = 0; i < numberOfBars; i++) {
         // use custom weighting to balance the frequencies
-        const weighting = 1 + (i / bufferLength); // Custom weighting
+        const weighting = 1 + (i / numberOfBars); // Custom weighting
         const barHeight = frequencyarray[i] * weighting;
 
         // calculate the colorIndex based on the position(number) of the bar
-        const colorIndex = Math.floor((i / bufferLength) * numberofColors);
-        ctx.fillStyle = rainbowColors[colorIndex];
+        const colorIndex = Math.floor((i / numberOfBars) * colorCount);
+        ctx.fillStyle = selectedPalette[colorIndex];
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
         x += barWidth + spacing;
     }

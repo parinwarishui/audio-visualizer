@@ -55,16 +55,18 @@
     </style>
 </head>
 <body>
-    <div class="player">
-        <input type="file" id="audioFile" accept="audio/*">
-        <canvas id="visualizer"></canvas>
-        <div class="controls">
-            <button id="playButton">Play</button>
-            <button id="pauseButton">Pause</button>
-        </div>
-        <div class="song-title" id="songTitle">No song playing</div>
-    </div>
-    
+    <h1>Visual Music</h1>
+    <input type="file" id="audioFile">
+    <button id="playButton">Play</button>
+    <button id="pauseButton">Pause</button>
+    <label for="colorPalette">Color Palette:</label>
+    <select id="colorPalette">
+        <option value="rainbow">Rainbow</option>
+        <option value="bluepastel">Blue Pastel</option>
+        <option value="monotone">Monotone</option>
+    </select>
+    <canvas id="visualizer"></canvas>
+    <p id="songTitle"></p>
     <script src="visualizer.js"></script>
 </body>
 </html>
