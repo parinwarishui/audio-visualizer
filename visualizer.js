@@ -1,15 +1,16 @@
-// getting the items from html file
-const audioinput = document.getElementById('audioFile');
-const playbutton = document.getElementById('playButton');
-const pausebutton = document.getElementById('pauseButton');
+// Getting elements from the HTML file
+const audioInput = document.getElementById('audioFile');
+const playButton = document.getElementById('playButton');
+const pauseButton = document.getElementById('pauseButton');
 const canvas = document.getElementById('visualizer');
 const ctx = canvas.getContext('2d');
 const colorPalette = document.getElementById('colorPalette');
 const songTitle = document.getElementById('songTitle');
-let currentVideo = document.getElementById('videoChoice');
+const videoChoice = document.getElementById('videoChoice');
+let currentVideo = document.getElementById('video1');
 
-// set canvas dimensions to the computer window
-canvas.width = 1280;
+// Set canvas dimensions
+canvas.width = 1300;
 canvas.height = 400;
 
 let audioContext;
@@ -17,21 +18,29 @@ let audioElement;
 let sourceNode;
 
 let analyser;
-let frequencyarray; 
+let frequencyArray;
 let bufferLength;
 
-// set the file uploading + play/pause
-audioinput.addEventListener('change', HandleFiles);
-playbutton.addEventListener('click', () => {
+// Event listeners
+audioInput.addEventListener('change', handleFiles);
+playButton.addEventListener('click', () => {
+    console.log('Play button clicked');
     if (audioElement) {
         audioElement.play();
-        currentVideo.play();
+        if (currentVideo) {
+            currentVideo.play();
+        }
+        console.log('Audio and video should be playing');
     }
 });
-pausebutton.addEventListener('click', () => {
+pauseButton.addEventListener('click', () => {
+    console.log('Pause button clicked');
     if (audioElement) {
         audioElement.pause();
-        currentVideo.pause();
+        if (currentVideo) {
+            currentVideo.pause();
+        }
+        console.log('Audio and video should be paused');
     }
 });
 
@@ -39,6 +48,7 @@ videoChoice.addEventListener('change', (event) => {
     const selectedVideoId = event.target.value;
     const newVideo = document.getElementById(selectedVideoId);
     if (newVideo !== currentVideo) {
+        console.log(`Switching from ${currentVideo.id} to ${newVideo.id}`);
         currentVideo.pause();
         currentVideo.style.display = 'none';
         currentVideo.currentTime = 0;
@@ -51,34 +61,34 @@ videoChoice.addEventListener('change', (event) => {
 });
 
 // preset of colors to choose
-const palettes = { 
+const palettes = {
     rainbow: [
-    'rgb(255, 128, 128)',
-    'rgb(255, 191, 128)',
-    'rgb(255, 255, 128)',
-    'rgb(191, 255, 128)',
-    'rgb(128, 255, 191)',
-    'rgb(128, 191, 255)',
-    'rgb(191, 128, 255)',
-    'rgb(255, 128, 255)'
+        'rgb(255, 128, 128)',
+        'rgb(255, 191, 128)',
+        'rgb(255, 255, 128)',
+        'rgb(191, 255, 128)',
+        'rgb(128, 255, 191)',
+        'rgb(128, 191, 255)',
+        'rgb(191, 128, 255)',
+        'rgb(255, 128, 255)'
     ],
     bluepastel: [
-    'rgb(173, 216, 230)',
-    'rgb(135, 206, 250)',
-    'rgb(135, 206, 235)',
-    'rgb(173, 216, 230)',
-    'rgb(135, 206, 250)',
-    'rgb(135, 206, 235)',
-    'rgb(173, 216, 230)',
-    'rgb(135, 206, 250)',
-    'rgb(173, 216, 230)',
-    'rgb(135, 206, 250)',
-    'rgb(135, 206, 235)',
-    'rgb(173, 216, 230)',
-    'rgb(135, 206, 250)',
-    'rgb(135, 206, 235)',
-    'rgb(173, 216, 230)',
-    'rgb(135, 206, 250)',
+        'rgb(173, 216, 230)',
+        'rgb(135, 206, 250)',
+        'rgb(135, 206, 235)',
+        'rgb(173, 216, 230)',
+        'rgb(135, 206, 250)',
+        'rgb(135, 206, 235)',
+        'rgb(173, 216, 230)',
+        'rgb(135, 206, 250)',
+        'rgb(173, 216, 230)',
+        'rgb(135, 206, 250)',
+        'rgb(135, 206, 235)',
+        'rgb(173, 216, 230)',
+        'rgb(135, 206, 250)',
+        'rgb(135, 206, 235)',
+        'rgb(173, 216, 230)',
+        'rgb(135, 206, 250)'
     ],
     neon: [
         'rgb(255,0,0)',
@@ -88,7 +98,12 @@ const palettes = {
         'rgb(0,255,255)',
         'rgb(0,0,255)',
         'rgb(255,0,255)',
-        'rgb(255,20,147)',
+        'rgb(255,20,147)'
+    ],
+    trafficlights: [
+        'rgb(255,0,0)',
+        'rgb(255,255,0)',
+        'rgb(0,255,0)',
     ],
     zebracrossing: [
         'rgb(255,255,255)',
@@ -103,24 +118,34 @@ const palettes = {
         'rgb(0,0,0)',
         'rgb(255,255,255)',
         'rgb(0,0,0)',
-        'rgb(255,255,255)',
+        'rgb(255,255,255)'
+    ],
+    grayscale: [
+        'rgb(76, 76, 76)',
+        'rgb(149, 149, 149)',
+        'rgb(218, 218, 218)',
+        'rgb(143, 143, 143)',
+        'rgb(128, 128, 128)',
+        'rgb(28, 28, 28)',
+        'rgb(145, 145, 145)',
+        'rgb(187, 47, 110)'
     ],
     white: [
         'rgb(255, 255, 255)'
     ]
-}
+};
 
 // make a url of the input music file
-function HandleFiles(event) {
+function handleFiles(event) {
     const file = event.target.files[0];
     if (file) {
         const fileURL = URL.createObjectURL(file);
-        InitializeAudio(fileURL, file.name);
+        initializeAudio(fileURL, file.name);
     }
 }
 
-// initialize the audio file received,
-function InitializeAudio(fileURL, fileName) {
+// initialize the audio file received
+function initializeAudio(fileURL, fileName) {
     if (audioContext) audioContext.close();
 
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -135,17 +160,17 @@ function InitializeAudio(fileURL, fileName) {
 
     analyser.fftSize = 256;
     bufferLength = analyser.frequencyBinCount;
-    frequencyarray = new Uint8Array(bufferLength);
+    frequencyArray = new Uint8Array(bufferLength);
 
-    songTitle.textContent = ("NOW PLAYING: " + fileName.slice(0, -4));
-    CreateTheVisualizer();
+    songTitle.textContent = `NOW PLAYING: ${fileName.slice(0, -4)}`;
+    createVisualizer();
 }
 
-function CreateTheVisualizer() {
-    requestAnimationFrame(CreateTheVisualizer);
+function createVisualizer() {
+    requestAnimationFrame(createVisualizer);
 
     // get each frequencies in the song playing
-    analyser.getByteFrequencyData(frequencyarray);
+    analyser.getByteFrequencyData(frequencyArray);
 
     ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -154,17 +179,17 @@ function CreateTheVisualizer() {
     const spacing = 3;
     let x = 0;
 
-    const numberOfBars = 100; //fix the amount of bars to limit only the lower frequencies
+    const numberOfBars = 100; // Limit number of bars for lower frequencies
     const selectedPalette = palettes[colorPalette.value];
     const colorCount = Math.min(numberOfBars, selectedPalette.length);
 
-    // Draw the bars up
+    // Draw the bars
     for (let i = 0; i < numberOfBars; i++) {
-        // use custom weighting to balance the frequencies
-        const weighting = 1 + (i / numberOfBars); // Custom weighting
-        const barHeight = frequencyarray[i] * weighting;
+        // Custom weighting for balancing frequencies
+        const weighting = 1 + (i / numberOfBars);
+        const barHeight = frequencyArray[i] * weighting;
 
-        // calculate the colorIndex based on the position(number) of the bar
+        // Calculate color index based on bar position
         const colorIndex = Math.floor((i / numberOfBars) * colorCount);
         ctx.fillStyle = selectedPalette[colorIndex];
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
@@ -172,3 +197,6 @@ function CreateTheVisualizer() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    currentVideo.pause();
+});
