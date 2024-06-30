@@ -6,6 +6,7 @@ const canvas = document.getElementById('visualizer');
 const ctx = canvas.getContext('2d');
 const colorPalette = document.getElementById('colorPalette');
 const songTitle = document.getElementById('songTitle');
+let currentVideo = document.getElementById('videoChoice');
 
 // set canvas dimensions to the computer window
 canvas.width = 1280;
@@ -21,8 +22,33 @@ let bufferLength;
 
 // set the file uploading + play/pause
 audioinput.addEventListener('change', HandleFiles);
-playbutton.addEventListener('click', () => audioElement && audioElement.play());
-pausebutton.addEventListener('click', () => audioElement && audioElement.pause());
+playbutton.addEventListener('click', () => {
+    if (audioElement) {
+        audioElement.play();
+        currentVideo.play();
+    }
+});
+pausebutton.addEventListener('click', () => {
+    if (audioElement) {
+        audioElement.pause();
+        currentVideo.pause();
+    }
+});
+
+videoChoice.addEventListener('change', (event) => {
+    const selectedVideoId = event.target.value;
+    const newVideo = document.getElementById(selectedVideoId);
+    if (newVideo !== currentVideo) {
+        currentVideo.pause();
+        currentVideo.style.display = 'none';
+        currentVideo.currentTime = 0;
+        currentVideo = newVideo;
+        currentVideo.style.display = 'block';
+        if (!audioElement.paused) {
+            currentVideo.play();
+        }
+    }
+});
 
 // preset of colors to choose
 const palettes = { 
@@ -36,7 +62,6 @@ const palettes = {
     'rgb(191, 128, 255)',
     'rgb(255, 128, 255)'
     ],
-
     bluepastel: [
     'rgb(173, 216, 230)',
     'rgb(135, 206, 250)',
@@ -55,11 +80,34 @@ const palettes = {
     'rgb(173, 216, 230)',
     'rgb(135, 206, 250)',
     ],
-
-    monotone: [
+    neon: [
+        'rgb(255,0,0)',
+        'rgb(255,165,0)',
+        'rgb(255,255,0)',
+        'rgb(0,255,0)',
+        'rgb(0,255,255)',
+        'rgb(0,0,255)',
+        'rgb(255,0,255)',
+        'rgb(255,20,147)',
+    ],
+    zebracrossing: [
+        'rgb(255,255,255)',
+        'rgb(0,0,0)',
+        'rgb(255,255,255)',
+        'rgb(0,0,0)',
+        'rgb(255,255,255)',
+        'rgb(0,0,0)',
+        'rgb(255,255,255)',
+        'rgb(0,0,0)',
+        'rgb(255,255,255)',
+        'rgb(0,0,0)',
+        'rgb(255,255,255)',
+        'rgb(0,0,0)',
+        'rgb(255,255,255)',
+    ],
+    white: [
         'rgb(255, 255, 255)'
     ]
-
 }
 
 // make a url of the input music file
