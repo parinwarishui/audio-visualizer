@@ -35,6 +35,14 @@
             justify-content: space-between;
             width: 100%;
         }
+        .controls-left {
+            display: flex;
+            align-items: center;
+        }
+        .controls-right {
+            display: flex;
+            align-items: center;
+        }
         .controls button {
             background-color: #00586e;
             border: none;
@@ -42,6 +50,11 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .controls select {
+            padding: 8px;
             font-size: 16px;
         }
         .controls button:hover {
@@ -52,21 +65,33 @@
             text-align: center;
             font-size: 18px;
         }
+        .texts {
+            margin: 10px 0;
+            text-align: center;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
-    <h1>Visual Music</h1>
-    <input type="file" id="audioFile">
-    <button id="playButton">Play</button>
-    <button id="pauseButton">Pause</button>
-    <label for="colorPalette">Color Palette:</label>
-    <select id="colorPalette">
-        <option value="rainbow">Rainbow</option>
-        <option value="bluepastel">Blue Pastel</option>
-        <option value="monotone">Monotone</option>
-    </select>
-    <canvas id="visualizer"></canvas>
-    <p id="songTitle"></p>
+    <div class="player">
+        <input type="file" id="audioFile" accept="audio/*">
+        <canvas id="visualizer"></canvas>
+        <div class="controls">
+            <div class="controls-left">
+                <button id="playButton">Play</button>
+                <button id="pauseButton">Pause</button>
+            </div>
+            <div class="controls-right">
+                <label for="colorPalette" class="texts">Color Palette:   </label>
+                <select id="colorPalette">
+                    <option value="rainbow">Rainbow</option>
+                    <option value="bluepastel">Blue Pastel</option>
+                    <option value="monotone">Monotone</option>
+                </select>
+            </div>
+        </div>
+        <div class="song-title" id="songTitle">No song playing</div>
+    </div>
     <script src="visualizer.js"></script>
 </body>
 </html>
