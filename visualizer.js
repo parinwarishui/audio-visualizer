@@ -176,7 +176,7 @@ function createVisualizer() {
     // get each frequencies in the song playing
     analyser.getByteFrequencyData(frequencyArray);
 
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     const barWidth = 7.5;
