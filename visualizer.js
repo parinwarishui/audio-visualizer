@@ -27,20 +27,12 @@ playButton.addEventListener('click', () => {
     console.log('Play button clicked');
     if (audioElement) {
         audioElement.play();
-        if (currentVideo) {
-            currentVideo.play();
-        }
-        console.log('Audio and video should be playing');
     }
 });
 pauseButton.addEventListener('click', () => {
     console.log('Pause button clicked');
     if (audioElement) {
         audioElement.pause();
-        if (currentVideo) {
-            currentVideo.pause();
-        }
-        console.log('Audio and video should be paused');
     }
 });
 
@@ -48,15 +40,12 @@ videoChoice.addEventListener('change', (event) => {
     const selectedVideoId = event.target.value;
     const newVideo = document.getElementById(selectedVideoId);
     if (newVideo !== currentVideo) {
-        console.log(`Switching from ${currentVideo.id} to ${newVideo.id}`);
         currentVideo.pause();
         currentVideo.style.display = 'none';
         currentVideo.currentTime = 0;
         currentVideo = newVideo;
         currentVideo.style.display = 'block';
-        if (!audioElement.paused) {
-            currentVideo.play();
-        }
+        currentVideo.play();
     }
 });
 
@@ -130,6 +119,13 @@ const palettes = {
         'rgb(145, 145, 145)',
         'rgb(105, 105, 105)'
     ],
+    night: [
+        'rgb(75,115,168)',
+        'rgb(83,107,161)',
+        'rgb(92,98,152)',
+        'rgb(99,90,145)',
+        'rgb(108,82,137)',
+    ],
     white: [
         'rgb(255, 255, 255)'
     ]
@@ -198,5 +194,23 @@ function createVisualizer() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    currentVideo.pause();
+    // autoplay the default video choice
+    currentVideo.style.display = 'block';
+    currentVideo.play();
+
+    // changing the video
+    videoChoice.addEventListener('change', () => {
+        const selectedVideoId = videoChoice.value;
+        const newVideo = document.getElementById(selectedVideoId);
+
+        // pause and set the time back to 0
+        currentVideo.pause();
+        currentVideo.style.display = 'none';
+        currentVideo.currentTime = 0;
+
+        // change currentVideo to selected new one
+        currentVideo = newVideo;
+        currentVideo.style.display = 'block';
+        currentVideo.play();
+    });
 });

@@ -13,7 +13,7 @@
             height: 100vh;
             background-color: #000;
             color: #fff;
-            font-family: Arial, sans-serif;
+            font-family: Helvetica, Arial, sans-serif;
         }
         .player {
             display: flex;
@@ -25,17 +25,23 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             z-index: 10;
             position: relative;
+            overflow: hidden;
         }
         #visualizer {
+            position: relative;
             display: block;
             margin: 10px 0;
             border: 1px solid #444;
+            z-index: 2;
+            background-color: transparent;
         }
         .controls {
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
+            z-index: 3;
+            position: relative;
         }
         .controls-left {
             display: flex;
@@ -57,7 +63,7 @@
         }
         .controls select {
             padding: 8px;
-            font-size: 25px;
+            font-size: 15px;
         }
         .controls button:hover {
             background-color: #b4b4b4;
@@ -65,12 +71,17 @@
         .song-title {
             margin: 10px 0;
             text-align: center;
-            font-size: 25px;
+            font-family: Helvetica, Arial, sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+            z-index: 3;
+            position: relative;
         }
         .texts {
             margin: 10px 0;
             text-align: center;
-            font-size: 25px;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 15px;
             padding: 8px;
         }
         video.background-video {
@@ -82,13 +93,15 @@
             object-fit: cover;
             z-index: 1;
             display: none;
+            z-index: 1; 
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-    <video id="video1" class="background-video" src="video1.mp4" loop></video>
-    <video id="video2" class="background-video" src="video2.mp4" loop></video>
+    <video id="video1" class="background-video" src="video1.mp4" loop autoplay muted></video>
+    <video id="video2" class="background-video" src="video2.mp4" loop muted></video>
 
     <div class="player">
         <input type="file" id="audioFile" accept="audio/*">
@@ -101,22 +114,23 @@
             <div class="controls-right">
                 <label for="videoChoice" class="texts">Video:</label>
                 <select id="videoChoice">
-                    <option value="video1">Video 1</option>
+                    <option value="video1" selected>Video 1</option>
                     <option value="video2">Video 2</option>
                 </select>
                 <label for="colorPalette" class="texts">Color Palette:</label>
                 <select id="colorPalette">
-                    <option value="rainbow">Rainbow</option>
+                    <option value="rainbow" selected>Rainbow</option>
                     <option value="bluepastel">Blue Pastel</option>
                     <option value="neon">Neon</option>
                     <option value="zebracrossing">Zebra Crossing</option>
                     <option value="grayscale">Grayscale</option>
                     <option value="trafficlights">Traffic Lights</option>
+                    <option value="night">Night</option>
                     <option value="white">White</option>
                 </select>
             </div>
         </div>
-        <div class="song-title" id="songTitle">No song playing</div>
+        <div class="song-title" id="songTitle">No Song Playing</div>
     </div>
     <script src="visualizer.js"></script>
 </body>
