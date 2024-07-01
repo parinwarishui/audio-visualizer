@@ -10,8 +10,9 @@ const videoChoice = document.getElementById('videoChoice');
 let currentVideo = document.getElementById('video1');
 
 // Set canvas dimensions
-canvas.width = 1300;
-canvas.height = 400;
+canvas.width = 800;
+canvas.height = 300;
+
 
 let audioContext;
 let audioElement;
@@ -126,6 +127,13 @@ const palettes = {
         'rgb(99,90,145)',
         'rgb(108,82,137)',
     ],
+    sunrise: [
+        'rgb(255,185,80)',
+        'rgb(255,173,51)',
+        'rgb(255,147,31)',
+        'rgb(255,173,51)',
+        'rgb(255,185,80)',
+    ],
     white: [
         'rgb(255, 255, 255)'
     ]
@@ -168,21 +176,21 @@ function createVisualizer() {
     // get each frequencies in the song playing
     analyser.getByteFrequencyData(frequencyArray);
 
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const barWidth = 10;
-    const spacing = 3;
+    const barWidth = 7.5;
+    const spacing = 2;
     let x = 0;
 
-    const numberOfBars = 100; // Limit number of bars for lower frequencies
+    const numberOfBars = 84; // Limit number of bars for lower frequencies
     const selectedPalette = palettes[colorPalette.value];
     const colorCount = Math.min(numberOfBars, selectedPalette.length);
 
     // Draw the bars
     for (let i = 0; i < numberOfBars; i++) {
         // Custom weighting for balancing frequencies
-        const weighting = 1 + (i / numberOfBars);
+        const weighting = 1 + (i / numberOfBars) * 0.4;
         const barHeight = frequencyArray[i] * weighting;
 
         // Calculate color index based on bar position

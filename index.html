@@ -23,6 +23,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            background-color: rgba(255, 255, 255, 0.1);
             z-index: 10;
             position: relative;
             overflow: hidden;
@@ -58,7 +59,7 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 25px;
+            font-size: 15px;
             margin-right: 10px;
         }
         .controls select {
@@ -102,6 +103,9 @@
 
     <video id="video1" class="background-video" src="video1.mp4" loop autoplay muted></video>
     <video id="video2" class="background-video" src="video2.mp4" loop muted></video>
+    <video id="video3" class="background-video" src="video3.mp4" loop muted></video>
+    <video id="video4" class="background-video" src="video4.mp4" loop muted></video>
+    <video id="video5" class="background-video" src="video5.mp4" loop muted></video>
 
     <div class="player">
         <input type="file" id="audioFile" accept="audio/*">
@@ -114,8 +118,11 @@
             <div class="controls-right">
                 <label for="videoChoice" class="texts">Video:</label>
                 <select id="videoChoice">
-                    <option value="video1" selected>Video 1</option>
-                    <option value="video2">Video 2</option>
+                    <option value="video1" selected>Night Drive</option>
+                    <option value="video2">Tunnel</option>
+                    <option value="video3">Skyscrapers</option>
+                    <option value="video4">Daylight</option>
+                    <option value="video5">Space</option>
                 </select>
                 <label for="colorPalette" class="texts">Color Palette:</label>
                 <select id="colorPalette">
@@ -126,6 +133,7 @@
                     <option value="grayscale">Grayscale</option>
                     <option value="trafficlights">Traffic Lights</option>
                     <option value="night">Night</option>
+                    <option value="sunrise">Sunrise</option>
                     <option value="white">White</option>
                 </select>
             </div>
