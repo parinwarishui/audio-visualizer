@@ -10,8 +10,8 @@ const videoChoice = document.getElementById('videoChoice');
 let currentVideo = document.getElementById('video1');
 
 // Set canvas dimensions
-canvas.width = 1300;
-canvas.height = 400;
+canvas.width = 950;
+canvas.height = 300;
 
 let audioContext;
 let audioElement;
@@ -168,11 +168,11 @@ function createVisualizer() {
     // get each frequencies in the song playing
     analyser.getByteFrequencyData(frequencyArray);
 
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const barWidth = 10;
-    const spacing = 3;
+    const barWidth = 7.5;
+    const spacing = 2;
     let x = 0;
 
     const numberOfBars = 100; // Limit number of bars for lower frequencies
