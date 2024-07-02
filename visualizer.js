@@ -179,8 +179,8 @@ function createVisualizer() {
     // clear the canvas out before drawing new one
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const barWidth = 7.5;
-    const spacing = 2;
+    const barWidth = 7;
+    const spacing = 2.5;
     let x = 0;
 
     const numberOfBars = 84; // Limit number of bars for lower frequencies
