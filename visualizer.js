@@ -53,89 +53,89 @@ videoChoice.addEventListener('change', (event) => {
 // preset of colors to choose
 const palettes = {
     rainbow: [
-        'rgb(255, 128, 128)',
-        'rgb(255, 191, 128)',
-        'rgb(255, 255, 128)',
-        'rgb(191, 255, 128)',
-        'rgb(128, 255, 191)',
-        'rgb(128, 191, 255)',
-        'rgb(191, 128, 255)',
-        'rgb(255, 128, 255)'
+        '#ff8080',
+        '#ffbf80',
+        '#ffff80',
+        '#bfff80',
+        '#80ffbf',
+        '#80bfff',
+        '#bf80ff',
+        '#ff80ff'
     ],
     bluepastel: [
-        'rgb(173, 216, 230)',
-        'rgb(135, 206, 250)',
-        'rgb(135, 206, 235)',
-        'rgb(173, 216, 230)',
-        'rgb(135, 206, 250)',
-        'rgb(135, 206, 235)',
-        'rgb(173, 216, 230)',
-        'rgb(135, 206, 250)',
-        'rgb(173, 216, 230)',
-        'rgb(135, 206, 250)',
-        'rgb(135, 206, 235)',
-        'rgb(173, 216, 230)',
-        'rgb(135, 206, 250)',
-        'rgb(135, 206, 235)',
-        'rgb(173, 216, 230)',
-        'rgb(135, 206, 250)'
+        '#add8e6',
+        '#87cefa',
+        '#87ceeb',
+        '#add8e6',
+        '#87cefa',
+        '#87ceeb',
+        '#add8e6',
+        '#87cefa',
+        '#add8e6',
+        '#87cefa',
+        '#87ceeb',
+        '#add8e6',
+        '#87cefa',
+        '#87ceeb',
+        '#add8e6',
+        '#87cefa'
     ],
     neon: [
-        'rgb(255,0,0)',
-        'rgb(255,165,0)',
-        'rgb(255,255,0)',
-        'rgb(0,255,0)',
-        'rgb(0,255,255)',
-        'rgb(0,0,255)',
-        'rgb(255,0,255)',
-        'rgb(255,20,147)'
+        '#ff0000',
+        '#ffa500',
+        '#ffff00',
+        '#00ff00',
+        '#00ffff',
+        '#0000ff',
+        '#ff00ff',
+        '#ff1493'
     ],
     trafficlights: [
-        'rgb(255,0,0)',
-        'rgb(255,255,0)',
-        'rgb(0,255,0)',
+        '#ff0000',
+        '#ffff00',
+        '#00ff00'
     ],
     zebracrossing: [
-        'rgb(255,255,255)',
-        'rgb(0,0,0)',
-        'rgb(255,255,255)',
-        'rgb(0,0,0)',
-        'rgb(255,255,255)',
-        'rgb(0,0,0)',
-        'rgb(255,255,255)',
-        'rgb(0,0,0)',
-        'rgb(255,255,255)',
-        'rgb(0,0,0)',
-        'rgb(255,255,255)',
-        'rgb(0,0,0)',
-        'rgb(255,255,255)'
+        '#ffffff',
+        '#000000',
+        '#ffffff',
+        '#000000',
+        '#ffffff',
+        '#000000',
+        '#ffffff',
+        '#000000',
+        '#ffffff',
+        '#000000',
+        '#ffffff',
+        '#000000',
+        '#ffffff'
     ],
     grayscale: [
-        'rgb(76, 76, 76)',
-        'rgb(149, 149, 149)',
-        'rgb(218, 218, 218)',
-        'rgb(143, 143, 143)',
-        'rgb(128, 128, 128)',
-        'rgb(28, 28, 28)',
-        'rgb(145, 145, 145)',
-        'rgb(105, 105, 105)'
+        '#4c4c4c',
+        '#959595',
+        '#dadada',
+        '#8f8f8f',
+        '#808080',
+        '#1c1c1c',
+        '#919191',
+        '#696969'
     ],
     night: [
-        'rgb(75,115,168)',
-        'rgb(83,107,161)',
-        'rgb(92,98,152)',
-        'rgb(99,90,145)',
-        'rgb(108,82,137)',
+        '#4b73a8',
+        '#536ba1',
+        '#5c6298',
+        '#635a91',
+        '#6c5289'
     ],
     sunrise: [
-        'rgb(255,185,80)',
-        'rgb(255,173,51)',
-        'rgb(255,147,31)',
-        'rgb(255,173,51)',
-        'rgb(255,185,80)',
+        '#ffb940',
+        '#ffad33',
+        '#ff931f',
+        '#ffad33',
+        '#ffb940'
     ],
     white: [
-        'rgb(255, 255, 255)'
+        '#ffffff'
     ]
 };
 
@@ -176,8 +176,8 @@ function createVisualizer() {
     // get each frequencies in the song playing
     analyser.getByteFrequencyData(frequencyArray);
 
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // clear the canvas out before drawing new one
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const barWidth = 7.5;
     const spacing = 2;
